@@ -29,9 +29,10 @@ class ReadOnlySearchManager(ReadOnlyManager):
     E.g. Model.objects.search("Foo bar")
     """
 
-    def __init__(self, search_field):
+    def __init__(self, search_field, title_field=None):
         super(ReadOnlySearchManager, self).__init__()
         self.search_field = search_field
+        self.title_field = title_field
         self._queryset_class = SearchQuerySet
 
     def contribute_to_class(self, cls, name):
