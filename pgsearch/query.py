@@ -43,7 +43,7 @@ class SearchQuerySet(BaseQuerySet):
 
         if search_term:
             if isinstance(search_term, basestring):
-                search_term = [x for x in re.sub('[\W-]+', ' ', search_term).split(" ") if x]
+                search_term = [x for x in re.sub('[\W-]+', ' ', search_term, flags=re.UNICODE).split(" ") if x]
 
             ts_query = self.__get_tsquery(search_term, fts_language, join_by, startswith)
 
