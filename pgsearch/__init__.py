@@ -5,9 +5,10 @@ Inspired by: https://github.com/linuxlewis/djorm-ext-pgfulltext
 """
 
 FTS_CONFIGURATIONS = {
+    'simple': 'simple',
+    'en': 'english',
     'da': 'danish',
     'nl': 'dutch',
-    'en': 'english',
     'fi': 'finnish',
     'fr': 'french',
     'de': 'german',
@@ -19,7 +20,6 @@ FTS_CONFIGURATIONS = {
     'pt': 'portuguese',
     'ro': 'romanian',
     'ru': 'russian',
-    'simple': 'simple',
     'es': 'spanish',
     'sv': 'swedish',
     'tr': 'turkish',
