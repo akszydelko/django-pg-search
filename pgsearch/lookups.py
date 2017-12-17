@@ -14,20 +14,20 @@ class FullTextLookupStartsWith(Lookup):
 
     @staticmethod
     def __quotes(word_list):
-        return ["%s" % adapt(x.replace("\\", "")) for x in word_list]
+        return ['{}'.format(adapt(x.replace('\\', ''))) for x in word_list]
 
     def __transform(self, word_list):
-        return [x + ":*" for x in self.__quotes(word_list)]
+        return ['{}:*'.format(x) for x in self.__quotes(word_list)]
 
     def as_sql(self, qn, connection):
         lhs, lhs_params = qn.compile(self.lhs)
         rhs, rhs_params = self.process_rhs(qn, connection)
 
-        if isinstance(rhs_params, basestring):
+        if isinstance(rhs_params, str):
             rhs_params = [rhs_params]
 
         # Basic query
-        cmd = "%s @@ to_tsquery(unaccent(%%s))" % lhs
-        rest = (" & ".join(self.__transform(rhs_params)),)
+        cmd = '{} @@ to_tsquery(unaccent(%s))'.format(lhs)
+        rest = (' & '.join(self.__transform(rhs_params)),)
 
         return cmd, rest
