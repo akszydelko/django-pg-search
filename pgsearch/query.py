@@ -1,4 +1,5 @@
 import re
+
 from django.db.models import QuerySet
 from psycopg2._psycopg import adapt
 
@@ -17,6 +18,8 @@ class BaseQuerySet(QuerySet):
             return name  # Quoting once is enough.
         return '"{}"'.format(name)
 
+    qn.queryset_only = True
+
 
 class SearchQuerySet(BaseQuerySet):
     @property
@@ -26,8 +29,12 @@ class SearchQuerySet(BaseQuerySet):
     def __startswith(self, word_list):
         return ['{}:*'.format(x.strip()) for x in filter(lambda x: x.strip(), word_list)]
 
+    __startswith.queryset_only = True
+
     def __unaccent(self, term):
         return 'unaccent({})'.format(term)
+
+    __unaccent.queryset_only = True
 
     def __get_tsquery(self, term, config, join_by, startswith, unaccent=True):
         operator = ' {} '.format(join_by)
@@ -37,6 +44,8 @@ class SearchQuerySet(BaseQuerySet):
             config,
             self.__unaccent(query) if unaccent else query
         ))
+
+    __get_tsquery.queryset_only = True
 
     def search(self, search_term, using=None, rank_ordering=True, rank_function='ts_rank', rank_normalization=32,
                fts_language="english", include_simple=True, join_by="&", startswith=True, divide_by_title_length=False,

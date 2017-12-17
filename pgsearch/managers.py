@@ -1,9 +1,9 @@
-from django.db.models import Manager
+from django.db.models.manager import BaseManager
 
 from .query import SearchQuerySet
 
 
-class ReadOnlyManager(Manager):
+class ReadOnlyManager(object):
     def bulk_create(self, *args, **kwargs):
         raise NotImplementedError
 
@@ -23,9 +23,9 @@ class ReadOnlyManager(Manager):
         raise NotImplementedError
 
 
-class ReadOnlySearchManager(ReadOnlyManager):
+class ReadOnlySearchManager(ReadOnlyManager, BaseManager.from_queryset(SearchQuerySet)):
     """
-    Model manager which block editing operations and adds useful search method.
+    Model manager which block editing operations and adds search method.
     E.g. Model.objects.search("Foo bar")
     """
 
@@ -33,7 +33,6 @@ class ReadOnlySearchManager(ReadOnlyManager):
         super(ReadOnlySearchManager, self).__init__()
         self.search_field = search_field
         self.title_field = title_field
-        self._queryset_class = SearchQuerySet
 
     def contribute_to_class(self, cls, name):
         """Called automatically by Django when setting up the model class."""
@@ -43,7 +42,3 @@ class ReadOnlySearchManager(ReadOnlyManager):
                 cls._fts_manager = self
 
         super(ReadOnlySearchManager, self).contribute_to_class(cls, name)
-
-    def search(self, search_term, **kwargs):
-        """Pass through function to search function of SearchQuerySet class."""
-        return self.get_queryset().search(search_term, **kwargs)
