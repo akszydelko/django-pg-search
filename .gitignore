@@ -1,3 +1,10 @@
+__pycache__/
 *.py[cod]
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# JetBrains
 .idea/
-.tmp/

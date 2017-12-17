@@ -4,6 +4,8 @@ Minimalistic application with fields, managers etc. for full text search support
 Inspired by: https://github.com/linuxlewis/djorm-ext-pgfulltext
 """
 
+__version__ = '0.1.0'
+
 FTS_CONFIGURATIONS = {
     'simple': 'simple',
     'en': 'english',

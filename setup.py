@@ -1,33 +1,45 @@
+#!/usr/bin/env python
 from setuptools import setup, find_packages
-from codecs import open
-from os import path
 
-root = path.abspath(path.dirname(__file__))
-with open(path.join(root, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
+from pgsearch import __version__
+
+long_description = """
+    Django app for making PostgreSQL full text search queries
+    
+    See more on: https://github.com/akszydelko/django-pg-search
+    
+    Copyright (c) 2017, Arkadiusz Szydełko All rights reserved.
+
+    Licensed under BSD 3-Clause License
+"""
 
 setup(
     name='django-pg-search',
-    version='0.0.1',
+    version=__version__,
     description='Django app for making PostgreSQL full text search queries',
     long_description=long_description,
     url='https://github.com/akszydelko/django-pg-search',
     author='Arkadiusz Szydelko',
     author_email='akszydelko@gmail.com',
-    license='MIT',
+    license='BSD',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: BSD License',
         'Environment :: Web Environment',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Framework :: Django',
-        'Framework :: Django :: 1.8',
     ],
     keywords='django postgresql full text search',
     packages=find_packages(),
-    install_requires=['django>=1.8', 'psycopg2>=2.6.1'],
+    install_requires=[
+        'django>=1.8',
+        'psycopg2>=2.6.1'
+    ],
 )
